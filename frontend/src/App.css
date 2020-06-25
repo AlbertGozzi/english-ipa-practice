@@ -1,0 +1,56 @@
+body {
+  /* background-color: #F8F8FA; */
+  background-color: rgb(39, 41, 45);
+  color: rgba(255, 255, 255, 0.9);
+
+  width: 100vw;
+  margin: 0;
+  overflow: hidden;
+}
+
+.App h2 {
+  margin: 1em 0 1em 0;
+  display: flex;
+  justify-content: center;
+}
+
+.wordToTranslate {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.wordToTranslate > * {
+  border: 1px;
+  border-radius: 4px;
+  padding: 0.5em;
+  margin: 0 2em;
+  color: rgb(39, 41, 45);
+  background-color: #ffffb3;
+}
+
+.wordTranslationInput {
+  border: 1px;
+  border-radius: 4px;
+  padding: 0.5em;
+  margin: 0 auto;
+  width: 30%;
+  text-align: center;
+}
+
+.wordTranslationAnswer {
+  border: 1px;
+  border-radius: 4px;
+  padding: 0.5em;
+  margin: 0 auto;
+  width: 30%;
+  text-align: center;
+}
+
+.correct {
+  background-color: darkgreen;
+}
+
+.incorrect {
+  background-color: darkred;
+}

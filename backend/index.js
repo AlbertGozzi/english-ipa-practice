@@ -1,20 +1,38 @@
-let fs = require('fs');
+// Dependencies 
+require('dotenv').config();
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const mongoose = require('mongoose');
+const Pronunciation = require('./models/Pronunciation.js');
 
-let pronunciationsArray = fs.readFileSync(__dirname + "/data/cmudict-0.7b.txt").toString().split("\n");
-let mostCommonWordsArray = fs.readFileSync(__dirname + "/data/google-10000-english-usa.txt").toString().split("\n");
-let mostCommonWordsPronunciation = {};
-
-pronunciationsArray.forEach(line => {
-    if (line.slice(0,3) !== ';;;') {
-        let word = line.split("  ")[0].toLowerCase();
-        let pronunciation = line.split("  ")[1];
-        if (mostCommonWordsArray.includes(word)) {
-            mostCommonWordsPronunciation[word] = pronunciation;
-            mostCommonWordsArray.splice(mostCommonWordsArray.indexOf(word), 1)
-        }
-    }
+// Setting up server
+const app = express();
+const server = http.Server(app);
+app.use(express.static(path.join(__dirname, '../../client/build')));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/build/', 'index.html'));
 });
 
-console.log(`Number of words with pronunciation: ${Object.keys(mostCommonWordsPronunciation).length}`);
-console.log(`Remaining words: ${mostCommonWordsArray.length}`);
-console.log(mostCommonWordsPronunciation)
+// Starting server
+let port = process.env.PORT;
+app.set('port', port);
+server.listen(port, function() {
+    console.log(`Starting server on port ${port}`);
+});
+
+// Connect to database
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(self => {
+    console.log(`Connected to the database: "${self.connection.name}"`);
+    // Before adding any documents to the database, let's delete all previous entries
+    // return self.connection.dropDatabase();
+  })
+  .catch(error => {
+    console.error('Error connecting to the database', error);
+  });
