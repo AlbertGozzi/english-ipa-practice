@@ -8,6 +8,12 @@ body {
   overflow: hidden;
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .App h2 {
   margin: 1em 0 1em 0;
   display: flex;
@@ -15,9 +21,7 @@ body {
 }
 
 .wordToTranslate {
-  display: flex;
-  justify-content: center;
-  text-align: center;
+  margin: 0 auto;
 }
 
 .wordToTranslate > * {
@@ -33,9 +37,10 @@ body {
   border: 1px;
   border-radius: 4px;
   padding: 0.5em;
-  margin: 0 auto;
-  width: 30%;
+  margin: 2em auto;
+  width: 40%;
   text-align: center;
+  align-self: center;
 }
 
 .wordTranslationAnswer {

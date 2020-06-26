@@ -3,16 +3,18 @@ require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const path = require('path');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const Pronunciation = require('./models/Pronunciation.js');
 
 // Setting up server
 const app = express();
 const server = http.Server(app);
+app.use(cors());
 app.use(express.static(path.join(__dirname, '../../client/build')));
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/build/', 'index.html'));
-});
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../../client/build/', 'index.html'));
+// });
 
 // Starting server
 let port = process.env.PORT;
@@ -36,3 +38,9 @@ mongoose
   .catch(error => {
     console.error('Error connecting to the database', error);
   });
+
+app.get('/pronunciations', (req, res, next) => {
+  Pronunciation.find({})
+    .then(data => res.send(data))
+    .catch(error => console.log(error));
+})

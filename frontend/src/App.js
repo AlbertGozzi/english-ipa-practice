@@ -1,9 +1,12 @@
 import React, {useState, useRef, useEffect} from 'react';
+import axios from 'axios';
 import './App.css';
 
 const App = () => {
+  let [allWords, setAllWords] = useState([]);
   let [answerMessage, setAnswerMessage] = useState([]);
-  let [word, setWord] = useState([]);
+  let [word, setWord] = useState(['Loading...']);
+  let [answer, setAnswer] = useState(['Loading...']);
   const inputRef = useRef(null);
 
   const displayWord = (word) => {
@@ -11,12 +14,12 @@ const App = () => {
   }
 
   const checkAnswer = () => {
-    let rightAnswer = 'test';
+    let rightAnswer = answer;
     let attempt = inputRef.current?.value;
 
     if (attempt.toLowerCase() === rightAnswer) { 
         setAnswerMessage(<div className='wordTranslationAnswer correct'> Correct! :) </div>);
-        setWord(getRandomWord());
+        setRandomWord();
         inputRef.current.value = '';
     } else {
         setAnswerMessage(<div className='wordTranslationAnswer incorrect'> Incorrect :( Please try again. </div>);
@@ -24,15 +27,22 @@ const App = () => {
     }
   }
 
-  const getRandomWord = () => {
-    let words = ['ham', 'cheese', 'bacon'];
-    let randomIndex = Math.floor(Math.random() * words.length);
-    return words[randomIndex];
+  const setRandomWord = () => {
+    let randomIndex = Math.floor(Math.random() * allWords.length);
+    let wordObject = allWords[randomIndex];
+    setWord(wordObject.word);
+    setAnswer(wordObject.pronunciation);
   }
 
   useEffect(() => {
-    setWord(getRandomWord())
+    axios.get('http://localhost:5000/pronunciations')
+      .then((res) => setAllWords(res.data))
+      .catch((err) => console.log(err));
   }, [])
+
+  useEffect(() => {
+    if (allWords.length) {setRandomWord();}
+  }, [allWords])
 
   return (
     <div className="App">
