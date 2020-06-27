@@ -21,7 +21,7 @@ mongoose
     console.error('Error connecting to the database', error);
   });
 
-let mostCommonWordsArray = fs.readFileSync(__dirname + "/data/google-10000-english-usa.txt").toString().split("\n");
+let mostCommonWordsArray = fs.readFileSync(__dirname + "/../data/google-10000-english-usa.txt").toString().split("\n");
 
 const getData = async () => {
     for (let i = 0; i < mostCommonWordsArray.length; i++) {

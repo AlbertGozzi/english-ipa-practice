@@ -14,10 +14,33 @@ body {
   justify-content: center;
 }
 
+h2, h3 {
+  color: white;
+}
+
 .App h2 {
   margin: 1em 0 1em 0;
   display: flex;
   justify-content: center;
+}
+
+.practiceOptions {
+  display: flex;
+  margin: 2em auto;
+}
+
+.practiceOptions > * {
+  padding: 0 1em;
+  margin: 0 1em;
+  height: 4.5em;
+  text-align: center;
+}
+
+.wordPronunciationPair {
+  margin: 1em 20%;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .wordToTranslate {
@@ -31,6 +54,16 @@ body {
   margin: 0 2em;
   color: rgb(39, 41, 45);
   background-color: #ffffb3;
+}
+
+.inputs {
+  margin: 2em auto;
+  text-align: center;
+}
+
+.inputOption {
+  margin: 0 1em;
+  padding: 0 1em;
 }
 
 .wordTranslationInput {
