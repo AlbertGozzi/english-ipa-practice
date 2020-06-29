@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Radio, Button } from 'antd';
 import axios from 'axios';
 import 'antd/dist/antd.css';
@@ -22,21 +22,6 @@ const App = () => {
     lettersToInput: []
   });
   let [practiceType, setPracticeType] = useState('frontVowels');
-  const inputRef = useRef(null);
-
-  const checkAnswer = () => {
-    let rightAnswer = word.answer;
-    let attempt = inputRef.current?.value;
-
-    if (attempt.toLowerCase() === rightAnswer) { 
-        setAnswerMessage(<div className='wordTranslationAnswer correct'> Correct! :) </div>);
-        setRandomWord();
-        inputRef.current.value = '';
-    } else {
-        setAnswerMessage(<div className='wordTranslationAnswer incorrect'> Incorrect :( Please try again. </div>);
-        console.log(`Right answer: ${rightAnswer}`)
-    }
-  }
 
   const setRandomWord = () => {    
     let randomIndex = Math.floor(Math.random() * allWords.length);
@@ -72,7 +57,7 @@ const App = () => {
     }
   }
 
-  const checkAnsw = (e) => {
+  const checkAnswer = (e) => {
     let attempt = e.currentTarget.value;
     let rightAnswer = word.lettersToInput[0];
 
@@ -114,12 +99,12 @@ const App = () => {
 
   const displayInputs = () => {
     return PRACTICE_OPTIONS[practiceType].map((letter, i) => {
-      return <Button value={letter} className="inputOption" key={i} onClick={(e) => checkAnsw(e)}>{letter}</Button>
+      return <Button value={letter} className="inputOption" key={i} onClick={(e) => checkAnswer(e)}>{letter}</Button>
     })
   }
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/pronunciations')
+    axios.get('/api/pronunciations')
       .then((res) => setAllWords(res.data))
       .catch((err) => console.log(err));
   }, [])
@@ -149,7 +134,6 @@ const App = () => {
       <div className='inputs'>
         {displayInputs()}
       </div>
-      {/* <input ref={inputRef} className="wordTranslationInput" placeholder="Your answer here." onKeyPress={event => {if (event.key === 'Enter') {checkAnswer()}}}></input> */}
       {answerMessage}
     </div>
   );
