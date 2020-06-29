@@ -99,7 +99,7 @@ const App = () => {
         setWord(wordCopy)
 
         // Update message
-        setAnswerMessage(<div className='wordTranslationAnswer correct'> Correct! You have {word.lettersToInput.length - 1} more letters to go. </div>);
+        setAnswerMessage(<div className='wordTranslationAnswer correct'> Correct! You have {wordCopy.lettersToInput.length} more letter{wordCopy.lettersToInput.length === 0 ? 's' : ''} to go. </div>);
       } else {
         // Update message
         setAnswerMessage(<div className='wordTranslationAnswer correct'> Correct! You've completed the word :) </div>);
