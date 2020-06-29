@@ -12,6 +12,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  font-size: 120%;
 }
 
 h2, h3 {

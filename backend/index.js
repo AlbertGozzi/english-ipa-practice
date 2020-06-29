@@ -12,9 +12,9 @@ const app = express();
 const server = http.Server(app);
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../../client/build')));
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../../client/build/', 'index.html'));
-// });
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/build/', 'index.html'));
+});
 
 // Starting server
 let port = process.env.PORT;
@@ -39,7 +39,7 @@ mongoose
     console.error('Error connecting to the database', error);
   });
 
-app.get('/pronunciations', (req, res, next) => {
+app.get('/api/pronunciations', (req, res, next) => {
   Pronunciation.find({})
     .then(data => res.send(data))
     .catch(error => console.log(error));

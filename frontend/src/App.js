@@ -119,7 +119,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:5000/pronunciations')
+    axios.get('http://localhost:5000/api/pronunciations')
       .then((res) => setAllWords(res.data))
       .catch((err) => console.log(err));
   }, [])
